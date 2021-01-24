@@ -2,7 +2,6 @@
 .header{
   padding: 3rem;
   background-color: #A0D29D;
-  font-family: 'Montserrat';
   color: white;
   display: flex;
   flex-direction: row;
@@ -25,14 +24,22 @@
 }
 
 .cardSection{
-  width: min(60vw,500px);
+  width: min(70vw,500px);
   margin: 0 auto 0 auto;
   text-align: center;
   transform: translateY(-25px);
 }
 
-.subtitle{
+.subtitleHidden{
   font-size: .1px;
+}
+
+.subtitle{
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  color: #363f5f;
+
+  font-weight: normal;
 }
 
 .card{
@@ -44,39 +51,52 @@
   width: 100%;
 }
 
+.subsubtitle{
+  color: #000;
+  font-weight: 200;
+  font-size: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .income{
-  color: #BBDFB9;
+  color: #12A454;
   font-weight: bold;
-  font-family: 'Montserrat';
   font-size: 20px;
 }
 
 .expense{
-  color: #F48498;
+  color: #E83F5B;
   font-weight: bold;
-  font-family: 'Montserrat';
-  font-size: 20px;
-}
-
-.subsubtitle{
-  color: #000;
-  font-family: 'Montserrat';
-  font-weight: 100;
   font-size: 20px;
 }
 
 .tableSection{
+  display: block;
+  width: 100%;
+  overflow-x: auto;
   margin: auto;
-  width: min(60vw,500px);
+}
+
+.button{  
+  font-weight: bold;
+  color: #12A454;
+  text-decoration: none;
+
+  cursor: pointer;
+  display: inline-block;
 }
 
 .table{
-  font-family: 'Montserrat';
   font-weight: 100;
   font-size: 18px;
   width: 100%;
   text-align: start;
   border-spacing: 0 1rem;
+
+  cursor: pointer;
 }
 
 .tableHeader{
@@ -108,6 +128,124 @@
   border-radius: 0 10px 10px 0;
 }
 
+.active {
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0,0,0,0.7);
+
+  position: fixed;
+  top: 0;
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+
+  opacity: 1;
+  visibility: visible;
+}
+
+.nonactive {
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0,0,0,0.7);
+
+  position: fixed;
+  top: 0;
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 999;
+}
+
+.modal {
+  background: #F0F2f5;
+  border-radius: 5px;
+  padding: 2.4rem;
+
+  position: relative;
+  z-index: 1;
+}
+
+.form {
+  max-width: 500px;
+}
+
+
+.input {
+  border: none;
+  border-radius: 0.2rem;
+
+  padding: 0.8rem;
+
+  width: 100%;
+}
+
+.help{
+  opacity: 0.4;
+}
+
+.input_group {
+  margin-top: 0.8rem;
+}
+
+.actionsForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonCancel{
+  margin-top: 5px;
+  text-decoration: none;
+
+  color: #e92929;
+  border: 2px #e92929 solid;
+  border-radius: 0.25rem;
+
+  height: 50px;
+  width: 48%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0.6;
+}
+
+.buttonCancel:hover {
+  opacity: 1;
+}
+
+.buttonSave{
+  width: 48%;
+  height: 50px;
+  margin-top: 5px;
+
+  border: none;
+
+  color: white;
+  background:  #A0D29D;
+
+  padding: 0;
+
+  border-radius: 0.25rem;
+
+  cursor: pointer;
+}
+
+.buttonSave:hover{
+  background: #12A454;
+}
+
 .footer{
   background-color: #A0D29D;
   margin: 0;
@@ -119,7 +257,6 @@
 }
 
 .footerTitle{
-  font-family: 'Montserrat';
   color: #FFF;
   font-size: 18px;
   font-weight: 400;
