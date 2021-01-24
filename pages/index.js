@@ -1,65 +1,60 @@
-import Head from 'next/head'
+import moneyImg from '../assets/money.png'
+import copyLeftImg from '../assets/copyleft.png'
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    <>
+    <header className={styles.header}>
+      <h1 className={styles.title}>Carteira Virtual</h1>
+      <img src={moneyImg} width="50" height="50" alt="Logo"/>
+    </header>
+    <main className={styles.main}>
+      <section className={styles.cardSection}>
+        <h2 className={styles.subtitle}>Balanço</h2>
+        <div className={styles.card}>
+          <h3 className={styles.subsubtitle}>Entradas</h3>
+          <p className={styles.income}>2.000 R$</p>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+        <div className={styles.card}>
+          <h3 className={styles.subsubtitle}>Saídas</h3>
+          <p className={styles.expense}>1.000 R$</p>
+        </div>
+        <div className={styles.card}>
+          <h3 className={styles.subsubtitle}>Total</h3>
+          <p className={styles.income}>1.000 R$</p>
+        </div>
+      </section>
+      <section className={styles.tableSection}>
+        <h2 className={styles.subtitle}>Gastos Específicos</h2>
+        <table className={styles.table}>
+          <thead>
+            <tr className={styles.tableTr}>
+              <th className={styles.tableHeader}>Tipo de gasto</th>
+              <th className={styles.tableHeader}>Data</th>
+              <th className={styles.tableHeader}>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className={styles.tableTr}>
+              <td className={styles.tableTd}>Comida</td>
+              <td className={styles.tableTd}>23/12/2020</td>
+              <td className={styles.tableTd}>37.50 R$</td>
+            </tr>
+            <tr className={styles.tableTr}>
+              <td className={styles.tableTd}>Comida</td>
+              <td className={styles.tableTd}>20/12/2020</td>
+              <td className={styles.tableTd}>20.50 R$</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer className={styles.footer}>
+      <img src={copyLeftImg} alt="Copyleft" width="30" height="30"/>
+      <h2 className={styles.footerTitle}>Por Fernanda Kipper</h2>
+    </footer>
+    </>
   )
 }
