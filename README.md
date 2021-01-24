@@ -7,4 +7,4 @@ Projeto baseado no desenvolvido durante a maratona discover da Rocketseat, poré
 
 - Styled Components
 
--Configuração de Loaders
+- Configuração de Loaders
