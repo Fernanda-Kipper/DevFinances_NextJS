@@ -104,7 +104,7 @@
 
 .tableSection{
   display: block;
-  width: 100%;
+  width: min(70vw,500px);
   overflow-x: auto;
   margin: auto;
 }
@@ -121,32 +121,58 @@
 .table{
   font-weight: 100;
   font-size: 18px;
-  width: 100%;
+  min-width: max(400px, 100%);
   text-align: start;
   border-spacing: 0 1rem;
 
   cursor: pointer;
+  overflow: auto;
 }
 
 .tableHeader{
-  font-weight: 300;
+  font-weight: 400;
   background-color: #fff;
   height: 50px;
   color: #25283D;
+  text-align: start;
 }
 
 .tableTr{
   opacity: 80%;
-  color: #25283D;
 }
 
 .tableTr:hover{
   opacity: 100%;
- }
+}
 
 .tableTd{
   background-color: #eeeeee;
+
   height: 50px;
+
+  color: #25283D;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.tableTdIncome{
+  background-color: #eeeeee;
+
+  height: 50px;
+
+  color: #62D239;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.tableTdExpense{
+  background-color: #eeeeee;
+
+  height: 50px;
+
+  color: #e92929;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .tableTd:first-child,
@@ -264,7 +290,7 @@
   border: none;
 
   color: white;
-  background:  #A0D29D;
+  background:  #9DF57D;
 
   padding: 0;
 

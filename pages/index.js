@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 import moneyImg from '../assets/money.svg'
 import copyLeftImg from '../assets/copyLeft.svg'
 import minusImg from '../assets/minus.svg'
-import plusImg from '../assets/plus.svg'
 import expenseImg from '../assets/expense.svg'
 import incomeImg from '../assets/income.svg'
 import totalImg from '../assets/total.svg'
@@ -11,30 +10,77 @@ import totalImg from '../assets/total.svg'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [test, setTest] = useState(false)
+  const [isActive, setActive] = useState(false)
+  const [transactions, setTransactions] = useState([])
+  const [description, setDescription] = useState("")
+  const [amount, setAmount] = useState("")
+  const [date, setDate] = useState("")
 
-  const classname = ()=>{
-    if(test){
+  useEffect(()=>{
+    setTransactions(JSON.parse(localStorage.getItem('transactions')) || [])
+  },[])
+
+  const modalClassname = useCallback(() =>{
+    if(isActive){
       return styles.active
     }
     else{
       return styles.nonactive
     }
-  }
+  }, [isActive])
 
   function handleOpenModal(){
-    if(test){
-      setTest(false)
+    if(isActive){
+      setActive(false)
     }
     else{
-      setTest(true)
+      setActive(true)
+    }
+  }
+
+  const Transactions = {
+    dataFormat(){
+      return
+    },
+
+    add(event){
+      event.preventDefault()
+      
+      this.dataFormat()
+      const formdata = {amount: amount, description: description, date: date}
+      let newTransactions = transactions
+      newTransactions.push(formdata)
+      setTransactions(newTransactions)
+      localStorage.setItem('transactions', JSON.stringify(transactions))
+    },
+
+    expenses(){
+      let expenses = 0
+      transactions.forEach(transaction => {
+        if (transaction.amount < 0){
+          expenses += Number(transaction.amount)
+        }
+      })
+      return expenses
+    },
+    incomes(){
+      let incomes = 0
+      transactions.forEach(transaction => {
+        if (transaction.amount > 0){
+          incomes += Number(transaction.amount)
+        }
+      })
+      return incomes
+    },
+    total(){
+      return this.incomes() + this.expenses()
     }
   }
 
   return (
     <>
     <header className={styles.header}>
-      <h1 className={styles.title}>Carteira Virtual</h1>
+      <h1 className={styles.title}>Expenses Manager</h1>
       <img src={moneyImg} width="50" height="50" alt="Logo"/>
     </header>
     <main className={styles.main}>
@@ -45,21 +91,21 @@ export default function Home() {
             <span>Entrada</span>
             <img src={incomeImg} alt="Image de entradas"/>
           </h3>
-          <p className={styles.income}>2.000 R$</p>
+          <p className={styles.income}>R$ {Transactions.incomes()}</p>
         </div>
         <div className={styles.card}>
           <h3 className={styles.subsubtitle}>
             <span>Saídas</span>
             <img src={expenseImg} alt="Image de saídas"/>
           </h3>
-          <p className={styles.expense}>1.000 R$</p>
+          <p className={styles.expense}>R$ {Transactions.expenses()}</p>
         </div>
         <div className={styles.totalCard}>
         <h3 className={styles.totalSubsubtitle}>
             <span>Total</span>
             <img src={totalImg} alt="Image de total"/>
           </h3>
-          <p className={styles.total}>1.000 R$</p>
+          <p className={styles.total}>R$ {Transactions.total()}</p>
         </div>
       </section>
       <section className={styles.tableSection}>
@@ -67,7 +113,7 @@ export default function Home() {
         <a
           href="#"
           onClick={handleOpenModal}
-          class={styles.button}>
+          className={styles.button}>
             + Nova Transação
         </a>
         <table className={styles.table}>
@@ -80,76 +126,77 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            <tr className={styles.tableTr}>
-              <td className={styles.tableTd}>Comida</td>
-              <td className={styles.tableTd}>23/12/2020</td>
-              <td className={styles.tableTd}>37.50 R$</td>
-              <td className={styles.tableTd}>  
-                <img src={minusImg} alt=""/>
-              </td>
-            </tr>
-            <tr className={styles.tableTr}>
-              <td className={styles.tableTd}>Comida</td>
-              <td className={styles.tableTd}>20/12/2020</td>
-              <td className={styles.tableTd}>20.50 R$</td>
-              <td className={styles.tableTd}>  
-                <img src={minusImg} alt=""/>
-              </td>
-            </tr>
+            {transactions.map((transaction,index) => (
+              <tr className={styles.tableTr} key={index}>
+                <td className={styles.tableTd}>{transaction.description}</td>
+                <td className={styles.tableTd}>{transaction.date}</td>
+                <td className={transaction.amount > 0 ? styles.tableTdIncome : styles.tableTdExpense}>{transaction.amount}</td>
+                <td className={styles.tableTd}>  
+                  <img 
+                  src={minusImg} 
+                  alt="Imagem indicando retirar transação"
+                  onClick={()=>{console.log('removido')}}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
-      <div class={classname()}>
-            <div class={styles.modal}>
-                <div class={styles.form}>
-                    <h2 class={styles.subtitle}>Nova Transação</h2>
-                    <form action="">
-                        <div class={styles.input_group}>
+      <div className={modalClassname()}>
+            <div className={styles.modal}>
+                <div className={styles.form}>
+                    <h2 className={styles.subtitle}>Nova Transação</h2>
+                    <form onSubmit={Transactions.add}>
+                        <div className={styles.input_group}>
                             <label 
-                                class={styles.subtitleHidden}
-                                for="description">Descrição</label>
+                                className={styles.subtitleHidden}
+                                htmlFor="description">Descrição</label>
                             <input 
                                 type="text" 
                                 id="description" 
                                 name="description"
                                 placeholder="Descrição"
-                                class={styles.input}
+                                className={styles.input}
+                                onChange={e => setDescription(e.target.value)}
                             />
                         </div>
 
-                        <div class={styles.input_group}>
+                        <div className={styles.input_group}>
                             <label 
-                                class={styles.subtitleHidden}
-                                for="amount">Valor</label>
-                            <input 
+                                className={styles.subtitleHidden}
+                                htmlFor="amount">Valor</label>
+                            <input
                                 type="number"
                                 step="0.01"
                                 id="amount" 
                                 name="amount"
                                 placeholder="0,00"
-                                class={styles.input}
+                                className={styles.input}
+                                onChange={e => setAmount(e.target.value)}
                             />
-                            <small class={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
+                            <small className={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
                         </div>
 
-                        <div class={styles.input_group}>
+                        <div className={styles.input_group}>
                             <label 
-                                class={styles.subtitleHidden} 
-                                for="date">Data</label>
+                                className={styles.subtitleHidden} 
+                                htmlFor="date">Data</label>
                             <input 
                                 type="date" 
                                 id="date" 
                                 name="date"
-                                class={styles.input}
+                                className={styles.input}
+                                onChange={e => setDate(e.target.value)}
                             />
                         </div>
 
-                        <div class={styles.actionsForm}>
+                        <div className={styles.actionsForm}>
                             <a 
                             onClick={handleOpenModal}
-                            href="#" 
-                            class={styles.buttonCancel}>Cancelar</a>
-                            <button class={styles.buttonSave}>Salvar</button>
+                            href="#"
+                            className={styles.buttonCancel}>Cancelar</a>
+                            <button className={styles.buttonSave}>Salvar</button>
                         </div>
                     </form>
                 </div>
