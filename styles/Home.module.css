@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,500;1,300&display=swap');
 .header{
   padding: 3rem;
-  background-color: #A0D29D;
-  color: white;
+  background-color: #9DF57D;
+  color: #25283D;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,6 +13,7 @@
 
 .title{
   font-weight: 400;
+  margin-right: 5px;
 }
 
 .main{
@@ -28,6 +29,10 @@
   margin: 0 auto 0 auto;
   text-align: center;
   transform: translateY(-25px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .subtitleHidden{
@@ -37,24 +42,42 @@
 .subtitle{
   margin-top: 0;
   margin-bottom: 0.8rem;
-  color: #363f5f;
+  color: #25283D;
 
   font-weight: normal;
 }
 
 .card{
-  border-bottom: 0.2px solid #c4c4c4;
-  border-radius: 20px;
+  border-radius: 5px;
   margin-bottom: 10px;
   background-color: #FFF;
   padding: 5px;
   width: 100%;
 }
 
+.totalCard{
+  background-color: #62D239;
+
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
 .subsubtitle{
-  color: #000;
-  font-weight: 200;
-  font-size: 1.5rem;
+  color: #25283D;
+  font-weight: 500;
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.totalSubsubtitle{
+  color: #FFF;
+  font-weight: 500;
+  font-size: 1rem;
 
   display: flex;
   align-items: center;
@@ -62,13 +85,19 @@
 }
 
 .income{
-  color: #12A454;
+  color: #62D239;
   font-weight: bold;
   font-size: 20px;
 }
 
 .expense{
   color: #E83F5B;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.total{
+  color: #FFF;
   font-weight: bold;
   font-size: 20px;
 }
@@ -82,7 +111,7 @@
 
 .button{  
   font-weight: bold;
-  color: #12A454;
+  color: #62D239;
   text-decoration: none;
 
   cursor: pointer;
@@ -100,13 +129,15 @@
 }
 
 .tableHeader{
-  font-weight: 200;
+  font-weight: 300;
   background-color: #fff;
   height: 50px;
+  color: #25283D;
 }
 
 .tableTr{
   opacity: 80%;
+  color: #25283D;
 }
 
 .tableTr:hover{
@@ -120,12 +151,12 @@
 
 .tableTd:first-child,
 .tableHeader:first-child{
-  border-radius: 10px 0 0 10px;
+  border-radius: 5px 0 0 5px;
 }
 
 .tableTd:last-child,
 .tableHeader:last-child{
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 5px 5px 0;
 }
 
 .active {
@@ -243,11 +274,11 @@
 }
 
 .buttonSave:hover{
-  background: #12A454;
+  background: #62D239;
 }
 
 .footer{
-  background-color: #A0D29D;
+  background-color: #9DF57D;
   margin: 0;
   display: flex;
   flex-direction: row;
@@ -257,7 +288,7 @@
 }
 
 .footerTitle{
-  color: #FFF;
+  color: #25283D;
   font-size: 18px;
   font-weight: 400;
   margin-left: 10px;

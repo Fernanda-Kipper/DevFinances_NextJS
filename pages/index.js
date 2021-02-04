@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import moneyImg from '../assets/money.png'
-import copyLeftImg from '../assets/copyleft.png'
+import moneyImg from '../assets/money.svg'
+import copyLeftImg from '../assets/copyLeft.svg'
 import minusImg from '../assets/minus.svg'
 import plusImg from '../assets/plus.svg'
 import expenseImg from '../assets/expense.svg'
@@ -54,12 +54,12 @@ export default function Home() {
           </h3>
           <p className={styles.expense}>1.000 R$</p>
         </div>
-        <div className={styles.card}>
-        <h3 className={styles.subsubtitle}>
+        <div className={styles.totalCard}>
+        <h3 className={styles.totalSubsubtitle}>
             <span>Total</span>
-            <img src={incomeImg} alt="Image de total"/>
+            <img src={totalImg} alt="Image de total"/>
           </h3>
-          <p className={styles.income}>1.000 R$</p>
+          <p className={styles.total}>1.000 R$</p>
         </div>
       </section>
       <section className={styles.tableSection}>
