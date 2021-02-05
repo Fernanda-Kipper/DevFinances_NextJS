@@ -1,10 +1,14 @@
-# Dev Finances com Next JS
+<img src="./assets/logo.svg" widht="500px" height="200px">
 
 ## :information_source: O que é?
-Projeto baseado no desenvolvido durante a maratona discover da Rocketseat, porém, desenvolvi com [Next JS](https://nextjs.org) - diferente do proposto na maratona - pois queria praticar meus conhecimentos do framework :)
+Projeto desenvolvido durante a maratona discover da Rocketseat, porém, implentado com [Next JS](https://nextjs.org) - diferente do proposto na maratona - pois queria praticar meus conhecimentos do framework :)
 
 ## Conceitos que coloquei em prática:
 
-- Styled Components
+- Contextos com UseContext, CreateContext
+
+- Component Level CSS
+
+- Manuseio de dados em Local Storage
 
 - Configuração de Loaders
