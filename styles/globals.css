@@ -1,10 +1,19 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
+:root{
+  --mainBg: #A2EB87;
+  --light-green: #62D239;
+  --light-red: #E83F5B;
+  --strong-red: #F1424B;
+  --text-color: #25283D;
 }
 
 * {
   box-sizing: border-box;
   font-family: 'Montserrat';
+}
+
+html,
+body{
+  padding: 0;
+  margin: 0;
+  background-color: #D8E2DC;
 }

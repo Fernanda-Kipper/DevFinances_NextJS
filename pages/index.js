@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import {Utilitys} from '../services/Utilitys'
 
 import moneyImg from '../assets/money.svg'
 import copyLeftImg from '../assets/copyLeft.svg'
@@ -10,7 +11,7 @@ import totalImg from '../assets/total.svg'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [isActive, setActive] = useState(false)
+  const [modalIsActive, setModalActive] = useState(false)
   const [transactions, setTransactions] = useState([])
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
@@ -21,66 +22,93 @@ export default function Home() {
   },[])
 
   const modalClassname = useCallback(() =>{
-    if(isActive){
+    if(modalIsActive){
       return styles.active
     }
     else{
       return styles.nonactive
     }
-  }, [isActive])
+  }, [modalIsActive])
 
   function handleOpenModal(){
-    if(isActive){
-      setActive(false)
+    if(modalIsActive){
+      setModalActive(false)
     }
     else{
-      setActive(true)
+      setModalActive(true)
     }
   }
 
   const Transactions = {
-    dataFormat(){
-      return
+
+    formatValues(){
+      const formatedAmount = Utilitys.formatAmount(amount)
+      const formatedDate = Utilitys.formatDate(date)
+      return {amount: formatedAmount, description: description, date: formatedDate}
     },
 
-    add(event){
-      event.preventDefault()
-      
-      this.dataFormat()
-      const formdata = {amount: amount, description: description, date: date}
+    saveTransaction(){
+      localStorage.setItem('transactions', JSON.stringify(transactions))
+    },
+
+    clearFields(){
+      setAmount(0)
+      setDescription('')
+      setDate('')
+    },
+
+    add(formdata){
       let newTransactions = transactions
       newTransactions.push(formdata)
       setTransactions(newTransactions)
-      localStorage.setItem('transactions', JSON.stringify(transactions))
     },
 
     expenses(){
       let expenses = 0
       transactions.forEach(transaction => {
         if (transaction.amount < 0){
-          expenses += Number(transaction.amount)
+          expenses += transaction.amount
         }
       })
+
       return expenses
     },
     incomes(){
       let incomes = 0
       transactions.forEach(transaction => {
         if (transaction.amount > 0){
-          incomes += Number(transaction.amount)
+          incomes += transaction.amount
         }
       })
+
       return incomes
     },
+
     total(){
       return this.incomes() + this.expenses()
-    }
+    },
+
+    submit(event){
+      event.preventDefault()
+
+      const formdata = Transactions.formatValues()
+
+      // updating the current state of transactions at the application
+      Transactions.add(formdata)
+
+      // saving to local storage
+      Transactions.saveTransaction()
+
+      setModalActive(false)
+
+      Transactions.clearFields()
+    },
   }
 
   return (
     <>
     <header className={styles.header}>
-      <h1 className={styles.title}>Expenses Manager</h1>
+      <h1 className={styles.title}>Dev Finances</h1>
       <img src={moneyImg} width="50" height="50" alt="Logo"/>
     </header>
     <main className={styles.main}>
@@ -91,21 +119,21 @@ export default function Home() {
             <span>Entrada</span>
             <img src={incomeImg} alt="Image de entradas"/>
           </h3>
-          <p className={styles.income}>R$ {Transactions.incomes()}</p>
+          <p className={styles.income}>{Utilitys.formatCurrency(Transactions.incomes())}</p>
         </div>
         <div className={styles.card}>
           <h3 className={styles.subsubtitle}>
             <span>Saídas</span>
             <img src={expenseImg} alt="Image de saídas"/>
           </h3>
-          <p className={styles.expense}>R$ {Transactions.expenses()}</p>
+          <p className={styles.expense}>{Utilitys.formatCurrency(Transactions.expenses())}</p>
         </div>
-        <div className={styles.totalCard}>
+        <div className={Transactions.total() >= 0 ? styles.totalCardPositive : styles.totalCardNegative}>
         <h3 className={styles.totalSubsubtitle}>
             <span>Total</span>
             <img src={totalImg} alt="Image de total"/>
           </h3>
-          <p className={styles.total}>R$ {Transactions.total()}</p>
+          <p className={styles.total}>{Utilitys.formatCurrency(Transactions.total())}</p>
         </div>
       </section>
       <section className={styles.tableSection}>
@@ -130,12 +158,20 @@ export default function Home() {
               <tr className={styles.tableTr} key={index}>
                 <td className={styles.tableTd}>{transaction.description}</td>
                 <td className={styles.tableTd}>{transaction.date}</td>
-                <td className={transaction.amount > 0 ? styles.tableTdIncome : styles.tableTdExpense}>{transaction.amount}</td>
+                <td className={transaction.amount > 0 ? styles.tableTdIncome : styles.tableTdExpense}>
+                  {Utilitys.formatCurrency(transaction.amount)}
+                </td>
                 <td className={styles.tableTd}>  
                   <img 
                   src={minusImg} 
                   alt="Imagem indicando retirar transação"
-                  onClick={()=>{console.log('removido')}}
+                  onClick={()=>{
+                    // firts remove from localStorage because after changing the State the page will be re-rendered
+                    localStorage.setItem('transactions',JSON.stringify(transactions.filter((obj, i) => i !== index)))
+
+                    // sets the new state
+                    setTransactions(currentState => currentState.filter((obj, i) => i !== index))
+                  }}
                   />
                 </td>
               </tr>
@@ -147,7 +183,7 @@ export default function Home() {
             <div className={styles.modal}>
                 <div className={styles.form}>
                     <h2 className={styles.subtitle}>Nova Transação</h2>
-                    <form onSubmit={Transactions.add}>
+                    <form onSubmit={Transactions.submit}>
                         <div className={styles.input_group}>
                             <label 
                                 className={styles.subtitleHidden}
@@ -159,6 +195,8 @@ export default function Home() {
                                 placeholder="Descrição"
                                 className={styles.input}
                                 onChange={e => setDescription(e.target.value)}
+                                value={description}
+                                required
                             />
                         </div>
 
@@ -174,6 +212,8 @@ export default function Home() {
                                 placeholder="0,00"
                                 className={styles.input}
                                 onChange={e => setAmount(e.target.value)}
+                                value={amount}
+                                required
                             />
                             <small className={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
                         </div>
@@ -188,6 +228,8 @@ export default function Home() {
                                 name="date"
                                 className={styles.input}
                                 onChange={e => setDate(e.target.value)}
+                                value={date}
+                                required
                             />
                         </div>
 
@@ -204,8 +246,8 @@ export default function Home() {
         </div>
     </main>
     <footer className={styles.footer}>
-      <img src={copyLeftImg} alt="Copyleft" width="30" height="30"/>
-      <h2 className={styles.footerTitle}>Por Fernanda Kipper</h2>
+      <img src={copyLeftImg} alt="Copyleft" width="25" height="25"/>
+      <h2 className={styles.footerTitle}>Dev Finance$</h2>
     </footer>
     </>
   )
