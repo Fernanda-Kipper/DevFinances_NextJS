@@ -1,9 +1,17 @@
 :root{
-  --mainBg: #A2EB87;
+  --mainBgLight: #D8E2DC;
+  --secondBgLight: #FFF;
+  --mainLightTheme: #A2EB87;
+
+  --mainBgDark: #29292e;
+  --secondBgDark: #81838f;
+  --mainDarkTheme: #121213;
+  --text-dark: #fff;
+
+  --text-light: #25283D;
   --light-green: #62D239;
   --light-red: #E83F5B;
   --strong-red: #F1424B;
-  --text-color: #25283D;
 }
 
 * {
@@ -15,5 +23,5 @@ html,
 body{
   padding: 0;
   margin: 0;
-  background-color: #D8E2DC;
+  height: 100%;
 }

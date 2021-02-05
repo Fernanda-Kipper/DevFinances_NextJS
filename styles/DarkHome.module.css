@@ -1,0 +1,106 @@
+.body{
+    background-color: var(--mainBgDark);
+    min-height: 100vh;
+}
+
+.header{
+    padding: 3rem;
+    background-color: var(--mainDarkTheme);
+    color: var(--secondBgLight);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.card{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--secondBgDark);
+    padding: 5px;
+    width: 100%;
+}
+
+.tableHeader{
+    font-weight: 400;
+    background-color: var(--secondBgDark);
+    height: 50px;
+    color: var(--text-color);
+    text-align: start;
+}
+
+.tableTd{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+.tableTdIncome{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--light-green);
+    font-weight: 400;
+    font-size: 16px;
+}
+  
+.tableTdExpense{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--light-red);
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.tableTd:first-child,
+.tableHeader:first-child{
+  border-radius: 5px 0 0 5px;
+}
+
+.tableTd:last-child,
+.tableHeader:last-child{
+  border-radius: 0 5px 5px 0;
+}
+
+.modal {
+    background: var(--secondBgDark);
+    border-radius: 5px;
+    padding: 2.4rem;
+  
+    position: relative;
+    z-index: 1;
+}
+
+.buttonCancel{
+    margin-top: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  
+    color: var(--strong-red);
+    border: 2px var(--strong-red) solid;
+    border-radius: 0.25rem;
+  
+    height: 50px;
+    width: 48%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+}
+
+.footerTitle{
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 10px;
+}
