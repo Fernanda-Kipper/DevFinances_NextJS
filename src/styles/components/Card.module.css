@@ -1,0 +1,61 @@
+.card{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--secondBgLight);
+    padding: 5px;
+    width: 100%;
+}
+
+.cardDark{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--secondBgDark);
+    padding: 5px;
+    width: 100%;
+}
+  
+.totalCardPositive{
+    background-color: var(--light-green);
+  
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+}
+
+.totalCardNegative{
+    background-color: var(--strong-red);
+  
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+}
+
+.income{
+    color: var(--light-green);
+    font-weight: bold;
+    font-size: 20px;
+}
+  
+.expense{
+    color: var(--light-red);
+    font-weight: bold;
+    font-size: 20px;
+}
+  
+.total{
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.subsubtitle{
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

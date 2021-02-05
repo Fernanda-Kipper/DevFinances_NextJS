@@ -1,5 +1,11 @@
-import { useState, useCallback, useEffect } from 'react'
-import {Utilitys} from '../services/Utilitys'
+import { useState, useEffect, useContext } from 'react'
+
+import {Utilitys} from '../src/services/Utilitys'
+import MainButton from '../src/components/MainButton'
+import Modal from '../src/components/Modal'
+import Card from '../src/components/Card'
+
+import ThemeContext from '../src/ThemeContext/ThemeContext'
 
 import moneyImg from '../assets/money.svg'
 import copyLeftImg from '../assets/copyLeft.svg'
@@ -8,12 +14,14 @@ import expenseImg from '../assets/expense.svg'
 import incomeImg from '../assets/income.svg'
 import totalImg from '../assets/total.svg'
 
-import styles from '../styles/Home.module.css'
-import darkStyles from '../styles/DarkHome.module.css'
+import styles from '../src/styles/pages/Home.module.css'
+import darkStyles from '../src/styles/pages/DarkHome.module.css'
 
 export default function Home() {
-  const [modalIsActive, setModalActive] = useState(false)
-  const [isDark, setDark] = useState(false)
+  const {isDark, setDarkTheme} = useContext(ThemeContext)
+
+  const [modalFormIsActive, setModalFormActive] = useState(false)
+  const [modalDeleteIsActive, setModalDeleteActive] = useState(false)
   const [transactions, setTransactions] = useState([])
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
@@ -21,34 +29,33 @@ export default function Home() {
 
   useEffect(()=>{
     setTransactions(JSON.parse(localStorage.getItem('transactions')) || [])
-    setDark(JSON.parse(localStorage.getItem('darkTheme')) || false)
   },[])
 
-  const modalClassname = useCallback(() =>{
-    if(modalIsActive){
-      return styles.active
+  function handleOpenModalForm(){
+    if(modalFormIsActive){
+      setModalFormActive(false)
     }
     else{
-      return styles.nonactive
+      setModalFormActive(true)
     }
-  }, [modalIsActive])
+  }
 
-  function handleOpenModal(){
-    if(modalIsActive){
-      setModalActive(false)
+  function handleOpenModalDelete(){
+    if(modalDeleteIsActive){
+      setModalDeleteActive(false)
     }
     else{
-      setModalActive(true)
+      setModalDeleteActive(true)
     }
   }
 
   function handleDarkActive(){
     if(isDark){
-      setDark(false)
+      setDarkTheme(false)
       localStorage.setItem('darkTheme', JSON.stringify(false))
     }
     else{
-      setDark(true)
+      setDarkTheme(true)
       localStorage.setItem('darkTheme', JSON.stringify(true))
     }
   }
@@ -121,47 +128,26 @@ export default function Home() {
 
   return (
     <div className={isDark ? darkStyles.body : styles.body}>
+
       <header className={isDark? darkStyles.header : styles.header}>
-      <label className={styles.switchButton}>
-        <input className={styles.switchInput} type="checkbox" onChange={handleDarkActive}/>
-        <span className={styles.slide}></span>
-      </label>
+        <label className={styles.switchButton}>
+          <input className={styles.switchInput} type="checkbox" onChange={handleDarkActive}/>
+          <span className={styles.slide}></span>
+        </label>
         <h1 className={styles.title}>Dev Finances</h1>
         <img src={moneyImg} width="50" height="50" alt="Logo"/>
       </header>
+
       <main className={styles.main}>
+        <MainButton handleOpenModalForm={handleOpenModalForm} handleOpenModalDelete={handleOpenModalDelete}/>
         <section className={styles.cardSection}>
           <h2 className={styles.subtitleHidden}>Balanço</h2>
-          <div className={isDark? darkStyles.card : styles.card}>
-          <h3 className={styles.subsubtitle}>
-              <span>Entrada</span>
-              <img src={incomeImg} alt="Image de entradas"/>
-            </h3>
-            <p className={styles.income}>{Utilitys.formatCurrency(Transactions.incomes())}</p>
-          </div>
-          <div className={isDark? darkStyles.card : styles.card}>
-            <h3 className={styles.subsubtitle}>
-              <span>Saídas</span>
-              <img src={expenseImg} alt="Image de saídas"/>
-            </h3>
-            <p className={styles.expense}>{Utilitys.formatCurrency(Transactions.expenses())}</p>
-          </div>
-          <div className={Transactions.total() >= 0 ? styles.totalCardPositive : styles.totalCardNegative}>
-          <h3 className={styles.totalSubsubtitle}>
-              <span>Total</span>
-              <img src={totalImg} alt="Image de total"/>
-            </h3>
-            <p className={styles.total}>{Utilitys.formatCurrency(Transactions.total())}</p>
-          </div>
+          <Card type="Entrada" Transactions={Transactions} Img={incomeImg}/>
+          <Card type="Saída" Transactions={Transactions} Img={expenseImg}/>
+          <Card type="Total" Transactions={Transactions} Img={totalImg} classname={Transactions.total() >= 0 ? 'positive' : 'negative'}></Card>
         </section>
         <section className={styles.tableSection}>
           <h2 className={styles.subtitleHidden}>Gastos Específicos</h2>
-          <a
-            href="#"
-            onClick={handleOpenModal}
-            className={styles.button}>
-              + Nova Transação
-          </a>
           <table className={styles.table}>
             <thead>
               <tr className={styles.tableTr}>
@@ -201,9 +187,20 @@ export default function Home() {
             </tbody>
           </table>
         </section>
-        <div className={modalClassname()}>
-              <div className={isDark? darkStyles.modal : styles.modal}>
-                  <div className={styles.form}>
+        <Modal modalIsActive={modalDeleteIsActive}>
+          <h2 className={styles.subtitle}>Deseja deletar todas transações?</h2>
+          <div className={styles.actionsForm}>
+            <a 
+              onClick={handleOpenModalDelete}
+              href="#"
+              className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
+              Cancelar
+            </a>
+            <button className={styles.buttonSave}>Salvar</button>
+          </div>
+        </Modal>
+        <Modal modalIsActive={modalFormIsActive}>
+          <div className={styles.form}>
                       <h2 className={styles.subtitle}>Nova Transação</h2>
                       <form onSubmit={Transactions.submit}>
                           <div className={styles.input_group}>
@@ -240,32 +237,33 @@ export default function Home() {
                               <small className={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
                           </div>
 
-                          <div className={styles.input_group}>
-                              <label 
-                                  className={styles.subtitleHidden} 
-                                  htmlFor="date">Data</label>
-                              <input 
-                                  type="date" 
-                                  id="date" 
-                                  name="date"
-                                  className={styles.input}
-                                  onChange={e => setDate(e.target.value)}
-                                  value={date}
-                                  required
-                              />
-                          </div>
-
-                          <div className={styles.actionsForm}>
-                              <a 
-                              onClick={handleOpenModal}
-                              href="#"
-                              className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>Cancelar</a>
-                              <button className={styles.buttonSave}>Salvar</button>
-                          </div>
-                      </form>
+                  <div className={styles.input_group}>
+                    <label 
+                      className={styles.subtitleHidden} 
+                      htmlFor="date">Data</label>
+                    <input 
+                      type="date" 
+                      id="date" 
+                      name="date"
+                      className={styles.input}
+                      onChange={e => setDate(e.target.value)}
+                      value={date}
+                      required
+                    />
                   </div>
-              </div>
+
+                  <div className={styles.actionsForm}>
+                    <a 
+                      onClick={handleOpenModalForm}
+                      href="#"
+                      className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
+                      Cancelar
+                    </a>
+                    <button className={styles.buttonSave}>Salvar</button>
+                  </div>
+              </form>
           </div>
+        </Modal>
       </main>
       <footer className={styles.footer}>
         <img src={copyLeftImg} alt="Copyleft" width="25" height="25"/>

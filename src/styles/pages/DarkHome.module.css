@@ -15,14 +15,6 @@
     box-sizing: border-box;
 }
 
-.card{
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: var(--secondBgDark);
-    padding: 5px;
-    width: 100%;
-}
-
 .tableHeader{
     font-weight: 400;
     background-color: var(--secondBgDark);
@@ -69,15 +61,6 @@
 .tableTd:last-child,
 .tableHeader:last-child{
   border-radius: 0 5px 5px 0;
-}
-
-.modal {
-    background: var(--secondBgDark);
-    border-radius: 5px;
-    padding: 2.4rem;
-  
-    position: relative;
-    z-index: 1;
 }
 
 .buttonCancel{
