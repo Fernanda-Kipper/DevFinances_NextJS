@@ -25,7 +25,3 @@ Padrão Next
 - Para rodar o projeto em modo desenvolvimento: yarn ou npm dev 
 
 - Modo produção, após o build: yarn ou npm start
-
-## Licença 
-
-[MIT](./licence)
