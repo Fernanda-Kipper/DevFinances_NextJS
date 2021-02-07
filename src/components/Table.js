@@ -38,7 +38,7 @@ export default function Table(){
               </td>
               <td className={isDark? styles.tableTdDark : styles.tableTd}>  
                 <img 
-                src={minusImg} 
+                src={minusImg}
                 alt="Imagem indicando retirar transação"
                 onClick={()=>{
                   localStorage.setItem('transactions', JSON.stringify(transactions.filter((obj, i) => i !== index)))

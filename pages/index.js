@@ -10,7 +10,7 @@ import ThemeContext from '../src/contexts/ThemeContext'
 import TransactionsContext from '../src/contexts/Transactions'
 
 import logoImg from '../assets/logo.svg'
-import copyLeftImg from '../assets/copyLeft.svg'
+import copyLeftImg from '../assets/Copyleft.svg'
 import expenseImg from '../assets/expense.svg'
 import incomeImg from '../assets/income.svg'
 import totalImg from '../assets/total.svg'
