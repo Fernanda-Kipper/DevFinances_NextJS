@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 import ThemeContext from '../src/contexts/ThemeContext'
 import TransactionsContext from '../src/contexts/Transactions'
@@ -17,6 +18,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeContext.Provider value={{isDark, setDarkTheme}}>
       <TransactionsContext.Provider value={{transactions, setTransactions}}>
+        <Head>
+          <link rel="icon" href="../assets/money.svg"/>
+          <title>DevFinances</title>
+        </Head>
         <Component {...pageProps} />
       </TransactionsContext.Provider>
     </ThemeContext.Provider>
