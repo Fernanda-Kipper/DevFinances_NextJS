@@ -45,6 +45,8 @@
     z-index: 1;
 }
 
+/* dark styles */
+
 .modalDark {
     background: var(--secondBgDark);
     border-radius: 5px;

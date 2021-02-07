@@ -1,9 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,500;1,300&display=swap');
 
+/* general */
+
 .body{
   background-color: var(--mainBgLight);
   min-height: 100vh;
 }
+
+.subtitleHidden{
+  font-size: .1px;
+}
+
+.subtitle{
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  color: var(--text-color);
+
+  font-weight: normal;
+}
+
+.subsubtitle{
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* header */
 
 .header{
   padding: 3rem;
@@ -58,12 +84,16 @@
   margin-right: 5px;
 }
 
+/* main content */
+
 .main{
   width: 100%;
   height: max(100vh, 100%);
   margin: 0;
   z-index: 1;
 }
+
+/* main -> balance cards section */
 
 .cardSection{
   width: min(70vw,500px);
@@ -76,28 +106,6 @@
   align-items: center;
 }
 
-.subtitleHidden{
-  font-size: .1px;
-}
-
-.subtitle{
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  color: var(--text-color);
-
-  font-weight: normal;
-}
-
-.subsubtitle{
-  color: var(--text-color);
-  font-weight: 500;
-  font-size: 1rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .totalSubsubtitle{
   color: #fff;
   font-weight: 500;
@@ -108,12 +116,16 @@
   justify-content: space-between;
 }
 
+/* main -> table of transactions */
+
 .tableSection{
   display: block;
   width: min(70vw,500px);
   overflow-x: auto;
   margin: auto;
 }
+
+/* main -> form to add transaction */
 
 .form {
   max-width: 500px;
@@ -188,6 +200,8 @@
   background: var(--light-green);
 }
 
+/* footer */
+
 .footer{
   margin: 0;
   display: flex;
@@ -210,10 +224,6 @@
     grid-template-columns: 1px 1fr 1fr 1fr;
     gap: 10px;
     width: max(60vw, 650px);
-  }
-
-  .card{
-    min-width: 200px;
   }
 
   .tableSection{

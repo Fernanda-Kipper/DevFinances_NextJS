@@ -5,14 +5,6 @@
     padding: 5px;
     width: 100%;
 }
-
-.cardDark{
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: var(--secondBgDark);
-    padding: 5px;
-    width: 100%;
-}
   
 .totalCardPositive{
     background-color: var(--light-green);
@@ -58,4 +50,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+/* dark styles */
+.cardDark{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--secondBgDark);
+    padding: 5px;
+    width: 100%;
+}
+
+@media(min-width: 900px){
+    .card{
+        min-width: 200px;
+    }
 }
