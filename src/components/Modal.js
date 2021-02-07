@@ -1,5 +1,6 @@
 import React, {useCallback, useContext} from 'react'
-import ThemeContext from '../ThemeContext/ThemeContext'
+
+import ThemeContext from '../contexts/ThemeContext'
 
 import styles from '../styles/components/Modal.module.css'
 

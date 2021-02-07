@@ -1,0 +1,105 @@
+.table{
+    font-weight: 100;
+    font-size: 18px;
+    min-width: max(400px, 100%);
+    text-align: start;
+    border-spacing: 0 1rem;
+  
+    cursor: pointer;
+    overflow: auto;
+}
+  
+.tableHeader{
+    font-weight: 400;
+    background-color: var(--secondBgLight);
+    height: 50px;
+    color: var(--text-color);
+    text-align: start;
+}
+  
+.tableTr{
+    opacity: 80%;
+}
+  
+.tableTr:hover{
+    opacity: 100%;
+}
+  
+.tableTd{
+    background-color: var(--secondBgLight);
+  
+    height: 50px;
+  
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 16px;
+}
+  
+.tableTdIncome{
+    background-color: var(--secondBgLight);
+  
+    height: 50px;
+  
+    color: var(--light-green);
+    font-weight: 400;
+    font-size: 16px;
+}
+  
+.tableTdExpense{
+    background-color: var(--secondBgLight);
+  
+    height: 50px;
+  
+    color: var(--light-red);
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* dark styles */
+.tableHeaderDark{
+    font-weight: 400;
+    background-color: var(--secondBgDark);
+    height: 50px;
+    color: var(--text-color);
+    text-align: start;
+}
+
+.tableTdDark{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+.tableTdIncomeDark{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--light-green);
+    font-weight: 400;
+    font-size: 16px;
+}
+  
+.tableTdExpenseDark{
+    background-color: var(--secondBgDark);
+  
+    height: 50px;
+  
+    color: var(--light-red);
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.tableTdDark:first-child,
+.tableHeaderDark:first-child{
+    border-radius: 5px 0 0 5px;
+}
+  
+.tableTdDark:last-child,
+.tableHeaderDark:last-child{
+    border-radius: 0 5px 5px 0;
+}

@@ -15,54 +15,6 @@
     box-sizing: border-box;
 }
 
-.tableHeader{
-    font-weight: 400;
-    background-color: var(--secondBgDark);
-    height: 50px;
-    color: var(--text-color);
-    text-align: start;
-}
-
-.tableTd{
-    background-color: var(--secondBgDark);
-  
-    height: 50px;
-  
-    color: var(--text-light);
-    font-weight: 400;
-    font-size: 16px;
-  }
-
-.tableTdIncome{
-    background-color: var(--secondBgDark);
-  
-    height: 50px;
-  
-    color: var(--light-green);
-    font-weight: 400;
-    font-size: 16px;
-}
-  
-.tableTdExpense{
-    background-color: var(--secondBgDark);
-  
-    height: 50px;
-  
-    color: var(--light-red);
-    font-weight: 400;
-    font-size: 16px;
-}
-
-.tableTd:first-child,
-.tableHeader:first-child{
-  border-radius: 5px 0 0 5px;
-}
-
-.tableTd:last-child,
-.tableHeader:last-child{
-  border-radius: 0 5px 5px 0;
-}
-
 .buttonCancel{
     margin-top: 5px;
     text-decoration: none;

@@ -1,10 +1,10 @@
-import React,{ useContext } from 'react'
+import React,{ useContext, useState } from 'react'
+
+import ThemeContext from '../contexts/ThemeContext'
 
 import styles from '../styles/components/Card.module.css'
-import {Utilitys} from '../services/Utilitys'
-import ThemeContext from '../ThemeContext/ThemeContext'
 
-export default function Card({ Transactions, Img, type, classname }){
+export default function Card({ Img, type, classname, value }){
     const { isDark } = useContext(ThemeContext)
     return(
        <div className=
@@ -18,7 +18,7 @@ export default function Card({ Transactions, Img, type, classname }){
             className=
             {type === "Entrada" ? styles.income
             :type === "Saída" ? styles.expense : styles.total}>
-                {Utilitys.formatCurrency(Transactions.incomes())}
+              {value}
         </p>
       </div>
     )

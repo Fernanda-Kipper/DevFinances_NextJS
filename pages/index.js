@@ -4,12 +4,13 @@ import {Utilitys} from '../src/services/Utilitys'
 import MainButton from '../src/components/MainButton'
 import Modal from '../src/components/Modal'
 import Card from '../src/components/Card'
+import Table from '../src/components/Table'
 
-import ThemeContext from '../src/ThemeContext/ThemeContext'
+import ThemeContext from '../src/contexts/ThemeContext'
+import TransactionsContext from '../src/contexts/Transactions'
 
-import moneyImg from '../assets/money.svg'
+import logoImg from '../assets/logo.svg'
 import copyLeftImg from '../assets/copyLeft.svg'
-import minusImg from '../assets/minus.svg'
 import expenseImg from '../assets/expense.svg'
 import incomeImg from '../assets/income.svg'
 import totalImg from '../assets/total.svg'
@@ -19,45 +20,74 @@ import darkStyles from '../src/styles/pages/DarkHome.module.css'
 
 export default function Home() {
   const {isDark, setDarkTheme} = useContext(ThemeContext)
+  const {transactions, setTransactions} = useContext(TransactionsContext)
 
   const [modalFormIsActive, setModalFormActive] = useState(false)
   const [modalDeleteIsActive, setModalDeleteActive] = useState(false)
-  const [transactions, setTransactions] = useState([])
+  const [modalTagsIsActive, setModalTagsActive] = useState(false)
+
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState("")
+  const [tag, setTag] = useState("")
+  const [newTag, setNewTag] = useState("")
+  const [registeredTags, setRegisteredTags] = useState([])
 
   useEffect(()=>{
-    setTransactions(JSON.parse(localStorage.getItem('transactions')) || [])
+    setRegisteredTags(JSON.parse(localStorage.getItem('tags')) || [])
   },[])
 
-  function handleOpenModalForm(){
-    if(modalFormIsActive){
-      setModalFormActive(false)
-    }
-    else{
-      setModalFormActive(true)
-    }
-  }
+  useEffect(()=>{
+    localStorage.setItem('tags', JSON.stringify(registeredTags))
+  },[registeredTags])
 
-  function handleOpenModalDelete(){
-    if(modalDeleteIsActive){
-      setModalDeleteActive(false)
-    }
-    else{
-      setModalDeleteActive(true)
-    }
-  }
+  const Handlers = {
 
-  function handleDarkActive(){
-    if(isDark){
-      setDarkTheme(false)
-      localStorage.setItem('darkTheme', JSON.stringify(false))
+    handleOpenModalForm(){
+      if(modalFormIsActive){
+        setModalFormActive(false)
+      }
+      else{
+        setModalFormActive(true)
+      }
+    },
+  
+    handleOpenModalDelete(){
+      if(modalDeleteIsActive){
+        setModalDeleteActive(false)
+      }
+      else{
+        setModalDeleteActive(true)
+      }
+    },
+  
+    handleOpenModalTags(){
+      if(modalTagsIsActive){
+        setModalTagsActive(false)
+      }
+      else{
+        setModalTagsActive(true)
+      }
+    },
+  
+    handleDarkActive(){
+      if(isDark){
+        setDarkTheme(false)
+        localStorage.setItem('darkTheme', JSON.stringify(false))
+      }
+      else{
+        setDarkTheme(true)
+        localStorage.setItem('darkTheme', JSON.stringify(true))
+      }
+    },
+  
+    handleAddTag(event){
+      event.preventDefault()
+      setRegisteredTags(prevState => [...prevState, newTag])
+      setNewTag("")
+      setModalTagsActive(false)
     }
-    else{
-      setDarkTheme(true)
-      localStorage.setItem('darkTheme', JSON.stringify(true))
-    }
+  
   }
 
   const Transactions = {
@@ -65,23 +95,27 @@ export default function Home() {
     formatValues(){
       const formatedAmount = Utilitys.formatAmount(amount)
       const formatedDate = Utilitys.formatDate(date)
-      return {amount: formatedAmount, description: description, date: formatedDate}
-    },
-
-    saveTransaction(){
-      localStorage.setItem('transactions', JSON.stringify(transactions))
+      return {amount: formatedAmount, description: description, date: formatedDate, tag: tag}
     },
 
     clearFields(){
       setAmount(0)
       setDescription('')
       setDate('')
+      setTag('')
+    },
+
+    deleteAll(){
+      localStorage.setItem('transactions', JSON.stringify([]))
+      setTransactions([])
+      setModalDeleteActive(false)
     },
 
     add(formdata){
-      let newTransactions = transactions
-      newTransactions.push(formdata)
-      setTransactions(newTransactions)
+      let newTransaction = transactions
+      newTransaction.push(formdata)
+      localStorage.setItem('transactions', JSON.stringify(newTransaction))
+      setTransactions(newTransaction)
     },
 
     expenses(){
@@ -94,6 +128,7 @@ export default function Home() {
 
       return expenses
     },
+
     incomes(){
       let incomes = 0
       transactions.forEach(transaction => {
@@ -114,13 +149,9 @@ export default function Home() {
 
       const formdata = Transactions.formatValues()
 
-      // updating the current state of transactions at the application
       Transactions.add(formdata)
 
-      // saving to local storage
-      Transactions.saveTransaction()
-
-      setModalActive(false)
+      setModalFormActive(false)
 
       Transactions.clearFields()
     },
@@ -131,143 +162,158 @@ export default function Home() {
 
       <header className={isDark? darkStyles.header : styles.header}>
         <label className={styles.switchButton}>
-          <input className={styles.switchInput} type="checkbox" onChange={handleDarkActive}/>
+          <input className={styles.switchInput} type="checkbox" onChange={Handlers.handleDarkActive}/>
           <span className={styles.slide}></span>
         </label>
-        <h1 className={styles.title}>Dev Finances</h1>
-        <img src={moneyImg} width="50" height="50" alt="Logo"/>
+        <img src={logoImg} width="200" height="100" alt="Logo Dev Finances"/>
       </header>
 
       <main className={styles.main}>
-        <MainButton handleOpenModalForm={handleOpenModalForm} handleOpenModalDelete={handleOpenModalDelete}/>
+        <MainButton 
+          handleOpenModalForm={Handlers.handleOpenModalForm} 
+          handleOpenModalDelete={Handlers.handleOpenModalDelete}
+          handleOpenModalTags={Handlers.handleOpenModalTags}
+        />
         <section className={styles.cardSection}>
           <h2 className={styles.subtitleHidden}>Balanço</h2>
-          <Card type="Entrada" Transactions={Transactions} Img={incomeImg}/>
-          <Card type="Saída" Transactions={Transactions} Img={expenseImg}/>
-          <Card type="Total" Transactions={Transactions} Img={totalImg} classname={Transactions.total() >= 0 ? 'positive' : 'negative'}></Card>
+          <Card type="Entrada" Transactions={Transactions} Img={incomeImg} value={Utilitys.formatCurrency(Transactions.incomes())}/>
+          <Card type="Saída" Transactions={Transactions} Img={expenseImg} value={Utilitys.formatCurrency(Transactions.expenses())}/>
+          <Card type="Total" Transactions={Transactions} Img={totalImg} value={Utilitys.formatCurrency(Transactions.total())} classname={Transactions.total() >= 0 ? 'positive' : 'negative'}></Card>
         </section>
         <section className={styles.tableSection}>
           <h2 className={styles.subtitleHidden}>Gastos Específicos</h2>
-          <table className={styles.table}>
-            <thead>
-              <tr className={styles.tableTr}>
-                <th className={isDark? darkStyles.tableHeader : styles.tableHeader}>Tipo de gasto</th>
-                <th className={isDark? darkStyles.tableHeader : styles.tableHeader}>Data</th>
-                <th className={isDark? darkStyles.tableHeader : styles.tableHeader}>Valor</th>
-                <th className={isDark? darkStyles.tableHeader : styles.tableHeader}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction,index) => (
-                <tr className={styles.tableTr} key={index}>
-                  <td className={isDark? darkStyles.tableTd : styles.tableTd}>{transaction.description}</td>
-                  <td className={isDark? darkStyles.tableTd : styles.tableTd}>{transaction.date}</td>
-                  <td 
-                  className={
-                    transaction.amount > 0 ? 
-                  (isDark? darkStyles.tableTdIncome : styles.tableTdIncome) 
-                  :(isDark? darkStyles.tableTdExpense : styles.tableTdExpense)}>
-                    {Utilitys.formatCurrency(transaction.amount)}
-                  </td>
-                  <td className={isDark? darkStyles.tableTd : styles.tableTd}>  
-                    <img 
-                    src={minusImg} 
-                    alt="Imagem indicando retirar transação"
-                    onClick={()=>{
-                      // firts remove from localStorage because after changing the State the page will be re-rendered
-                      localStorage.setItem('transactions',JSON.stringify(transactions.filter((obj, i) => i !== index)))
-
-                      // sets the new state
-                      setTransactions(currentState => currentState.filter((obj, i) => i !== index))
-                    }}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table/>
         </section>
         <Modal modalIsActive={modalDeleteIsActive}>
           <h2 className={styles.subtitle}>Deseja deletar todas transações?</h2>
           <div className={styles.actionsForm}>
             <a 
-              onClick={handleOpenModalDelete}
+              onClick={Handlers.handleOpenModalDelete}
               href="#"
               className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
               Cancelar
             </a>
-            <button className={styles.buttonSave}>Salvar</button>
+            <button className={styles.buttonSave} onClick={Transactions.deleteAll}>Confirmar</button>
           </div>
         </Modal>
         <Modal modalIsActive={modalFormIsActive}>
           <div className={styles.form}>
-                      <h2 className={styles.subtitle}>Nova Transação</h2>
-                      <form onSubmit={Transactions.submit}>
-                          <div className={styles.input_group}>
-                              <label 
-                                  className={styles.subtitleHidden}
-                                  htmlFor="description">Descrição</label>
-                              <input 
-                                  type="text" 
-                                  id="description" 
-                                  name="description"
-                                  placeholder="Descrição"
-                                  className={styles.input}
-                                  onChange={e => setDescription(e.target.value)}
-                                  value={description}
-                                  required
-                              />
-                          </div>
-
-                          <div className={styles.input_group}>
-                              <label 
-                                  className={styles.subtitleHidden}
-                                  htmlFor="amount">Valor</label>
-                              <input
-                                  type="number"
-                                  step="0.01"
-                                  id="amount" 
-                                  name="amount"
-                                  placeholder="0,00"
-                                  className={styles.input}
-                                  onChange={e => setAmount(e.target.value)}
-                                  value={amount}
-                                  required
-                              />
-                              <small className={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
-                          </div>
-
-                  <div className={styles.input_group}>
-                    <label 
-                      className={styles.subtitleHidden} 
-                      htmlFor="date">Data</label>
-                    <input 
-                      type="date" 
-                      id="date" 
-                      name="date"
-                      className={styles.input}
-                      onChange={e => setDate(e.target.value)}
-                      value={date}
-                      required
-                    />
+            <h2 className={styles.subtitle}>Nova Transação</h2>
+            <form onSubmit={Transactions.submit}>
+              <div className={styles.input_group}>
+                <label 
+                  className={styles.subtitleHidden}
+                  htmlFor="description">Descrição</label>
+                <input
+                  type="text" 
+                  id="description" 
+                  name="description"
+                  placeholder="Descrição"
+                  className={styles.input}
+                  onChange={e => setDescription(e.target.value)}
+                  value={description}
+                  required
+                />
+                </div>
+                <div className={styles.input_group}>
+                  <label 
+                    className={styles.subtitleHidden} 
+                    htmlFor="tag">Tag</label>
+                <select 
+                    type="select" 
+                    id="tag" 
+                    name="tag"
+                    className={styles.input}
+                    onChange={e => setTag(e.target.value)}
+                    value={tag}
+                >
+                  <option value="">Selecione entre suas tags cadastradas</option>
+                    {registeredTags.map(tag => {
+                      return (<option key={tag} value={tag}>{tag}</option>)
+                    })}
+                </select>
                   </div>
 
-                  <div className={styles.actionsForm}>
-                    <a 
-                      onClick={handleOpenModalForm}
-                      href="#"
-                      className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
-                      Cancelar
-                    </a>
-                    <button className={styles.buttonSave}>Salvar</button>
-                  </div>
-              </form>
+                <div className={styles.input_group}>
+                  <label 
+                    className={styles.subtitleHidden}
+                     htmlFor="amount">Valor</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    id="amount" 
+                    name="amount"
+                    placeholder="0,00"
+                    className={styles.input}
+                    onChange={e => setAmount(e.target.value)}
+                    value={amount}
+                    required
+                  />
+                  <small className={styles.help}>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
+                </div>
+
+                <div className={styles.input_group}>
+                  <label 
+                    className={styles.subtitleHidden} 
+                    htmlFor="date">Data</label>
+                  <input 
+                    type="date" 
+                    id="date" 
+                    name="date"
+                    className={styles.input}
+                    onChange={e => setDate(e.target.value)}
+                    value={date}
+                    required
+                  />
+                </div>
+                <div className={styles.actionsForm}>
+                  <a 
+                    onClick={Handlers.handleOpenModalForm}
+                    href="#"
+                    className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
+                    Cancelar
+                  </a>
+                  <button className={styles.buttonSave}>Salvar</button>
+                </div>
+            </form>
+          </div>
+        </Modal>
+        <Modal modalIsActive={modalTagsIsActive}>
+          <div className={styles.form}>
+            <h2 className={styles.subtitle}>Adicionar uma Tag</h2>
+            <form onSubmit={Handlers.handleAddTag}>
+              <div className={styles.input_group}>
+                <label
+                  className={styles.subtitleHidden}
+                  htmlFor="description">Nome da Tag</label>
+                <input
+                  type="text" 
+                  id="tag" 
+                  name="tag"
+                  placeholder="Exemplo: Comida"
+                  className={styles.input}
+                  onChange={e => setNewTag(e.target.value)}
+                  value={newTag}
+                  required
+                />
+                <small className={styles.help}>Tags vão te auxiliar a identificar as áreas que você mais tem gasto, ex: comida, lazer, contas da casa etc</small>
+              </div>
+              <div className={styles.actionsForm}>
+                <a 
+                  onClick={Handlers.handleOpenModalTags}
+                  href="#"
+                  className={isDark? darkStyles.buttonCancel : styles.buttonCancel}>
+                  Cancelar
+                </a>
+                <button type="submit" className={styles.buttonSave}>Salvar</button>
+              </div>
+            </form>
           </div>
         </Modal>
       </main>
       <footer className={styles.footer}>
         <img src={copyLeftImg} alt="Copyleft" width="25" height="25"/>
-        <h2 className={isDark? darkStyles.footerTitle : styles.footerTitle}>Dev Finance$</h2>
+        <h2 className={isDark? darkStyles.footerTitle : styles.footerTitle}>Fernanda Kipper</h2>
       </footer>
     </div>
   )
