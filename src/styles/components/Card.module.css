@@ -75,6 +75,9 @@
     background-color: var(--secondBgDark);
     padding: 5px;
     width: 100%;
+
+    animation-name: cards;
+    animation-duration: 2s;
 }
 
 @media(min-width: 900px){
