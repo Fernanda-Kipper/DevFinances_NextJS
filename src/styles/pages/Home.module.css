@@ -96,7 +96,7 @@
 /* main -> balance cards section */
 
 .cardSection{
-  width: min(70vw,500px);
+  width: 80vw;
   margin: 0 auto 0 auto;
   text-align: center;
   transform: translateY(-25px);
