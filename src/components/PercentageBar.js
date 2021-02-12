@@ -40,7 +40,7 @@ export default function TableTags({ totalExpenses, registeredTags }){
                         </div>
                     )
                 }
-                })}
+            })}
         </div>
     )
 }
