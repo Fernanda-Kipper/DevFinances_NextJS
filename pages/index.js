@@ -30,6 +30,7 @@ export default function Home() {
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState("")
+  
   const [tag, setTag] = useState("")
   const [newTag, setNewTag] = useState("")
   const [registeredTags, setRegisteredTags] = useState([])
