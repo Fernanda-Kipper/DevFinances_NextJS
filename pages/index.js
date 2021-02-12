@@ -187,7 +187,7 @@ export default function Home() {
         </section>
         <section className={styles.tableSection}>
           <h2 className={isDark? darkStyles.subtitle : styles.subtitle}>Saídas por tag</h2>
-          <TagsPercentage totalExpenses={Transactions.expenses()} registeredTags={registeredTags}/>
+          <TagsPercentage totalExpenses={Transactions.expenses()} tags={registeredTags}/>
         </section>
         <Modal modalIsActive={modalDeleteIsActive}>
           <h2 className={styles.subtitle}>Deseja deletar todas transações?</h2>
