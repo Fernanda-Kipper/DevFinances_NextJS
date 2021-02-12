@@ -15,6 +15,15 @@
     box-sizing: border-box;
 }
 
+.subtitle{
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    color: var(--text-dark);
+  
+    font-weight: normal;
+    text-align: center;
+}
+
 .buttonCancel{
     margin-top: 5px;
     text-decoration: none;

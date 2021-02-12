@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext  } from 'react'
 
 import {Utilitys} from '../services/Utilitys'
 
@@ -27,7 +27,7 @@ export default function Table(){
           {transactions.map((transaction,index) => (
             <tr className={styles.tableTr} key={index}>
               <td className={isDark? styles.tableTdDark : styles.tableTd}>{transaction.description}</td>
-              <td className={isDark? styles.tableTd : styles.tableTd}>{transaction.tag}</td>
+              <td className={isDark? styles.tableTdDark : styles.tableTd}>{transaction.tag}</td>
               <td className={isDark? styles.tableTdDark : styles.tableTd}>{transaction.date}</td>
               <td
               className={

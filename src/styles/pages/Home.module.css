@@ -17,6 +17,7 @@
   color: var(--text-color);
 
   font-weight: normal;
+  text-align: center;
 }
 
 .subsubtitle{
@@ -120,7 +121,7 @@
 
 .tableSection{
   display: block;
-  width: min(70vw,500px);
+  width: 80vw;
   overflow-x: auto;
   margin: auto;
 }

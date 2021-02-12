@@ -5,6 +5,7 @@ import MainButton from '../src/components/MainButton'
 import Modal from '../src/components/Modal'
 import Card from '../src/components/Card'
 import Table from '../src/components/Table'
+import TagsPercentage from '../src/components/PercentageBar'
 
 import ThemeContext from '../src/contexts/ThemeContext'
 import TransactionsContext from '../src/contexts/Transactions'
@@ -183,6 +184,10 @@ export default function Home() {
         <section className={styles.tableSection}>
           <h2 className={styles.subtitleHidden}>Gastos Específicos</h2>
           <Table/>
+        </section>
+        <section className={styles.tableSection}>
+          <h2 className={isDark? darkStyles.subtitle : styles.subtitle}>Saídas por tag</h2>
+          <TagsPercentage totalExpenses={Transactions.expenses()} registeredTags={registeredTags}/>
         </section>
         <Modal modalIsActive={modalDeleteIsActive}>
           <h2 className={styles.subtitle}>Deseja deletar todas transações?</h2>
