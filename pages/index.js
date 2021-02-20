@@ -85,7 +85,14 @@ export default function Home() {
   
     handleAddTag(event){
       event.preventDefault()
-      setRegisteredTags(prevState => [...prevState, newTag])
+      if (registeredTags.some(value => {
+        return value === newTag
+      })){
+        alert('Essa tag já foi registrada :)')
+      }
+      else{
+        setRegisteredTags(prevState => [...prevState, newTag])
+      }
       setNewTag("")
       setModalTagsActive(false)
     }

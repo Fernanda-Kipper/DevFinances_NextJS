@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState  } from 'react'
+import React, { useContext } from 'react'
 
 import {Utilitys} from '../services/Utilitys'
 
@@ -7,7 +7,7 @@ import TransactionsContext from '../contexts/Transactions'
 
 import styles from '../styles/components/PercentageBar.module.css'
 
-export default function TableTags({ totalExpenses, tags }){
+const TableTags = React.memo(function TableTag({ totalExpenses, tags }){
     const { isDark } = useContext(ThemeContext)
     const { transactions } = useContext(TransactionsContext)
 
@@ -34,4 +34,6 @@ export default function TableTags({ totalExpenses, tags }){
             })}
         </div>
     )
-}
+})
+
+export default TableTags;
