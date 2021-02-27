@@ -19,12 +19,4 @@ Dev Finances é uma aplicação web que auxilia o usuário no controle de suas d
 
 - Configuração de Loaders
 
-## 💻 Como rodar
-
-Padrão Next
-
-- yarn add / npm install
-
-- Para rodar o projeto em modo desenvolvimento: yarn ou npm dev 
-
-- Modo produção, após o build: yarn ou npm start
+## 💻 Rodando localmente
