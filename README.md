@@ -20,3 +20,14 @@ Dev Finances é uma aplicação web que auxilia o usuário no controle de suas d
 - Configuração de Loaders
 
 ## 💻 Rodando localmente
+
+Para rodar o Dev Finances localmente em modo de desenvolvimento você deve:
+
+```
+git clone https://github.com/Fernanda-Kipper/DevFinances_NextJS.git project_name
+cd project_name
+npm install
+npm run-script dev
+```
+
+No local de npm você pode utilizar o package manager de sua preferência
