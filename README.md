@@ -16,6 +16,7 @@ Dev Finances é uma aplicação web que auxilia o usuário no controle de suas d
 
 <p align="center">
   <img src="devFinances.png" width="500px">
+   <img src="devFinancesDark.png" width="500px">
 </p>
 
 <h2 id="tech" >Tecnologias</h2>
@@ -36,7 +37,8 @@ Para a construção do projeto apliquei alguns conceitos de JavaScript como manu
 
 Na construção do App adicionei funcionalidades a mais daquelas propostas na maratona:
 
-- Adicionei a opç~so de mudar de tema, Light ou Dark mode, e as preferências do usuário ficam salvas localmente.
+- Adicionei a opção de mudar de tema, Light ou Dark mode, e as preferências do usuário ficam salvas localmente.
+- Botão para excluir todas transações
 - Separação dos Gastos por Tags, exemplo: Comida.
 - Gráfico para o usuário visualizar seus gastos dividos por Tags - linkei com a funcionalidade anterior.
 
