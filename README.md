@@ -1,30 +1,3 @@
-
-
-## Conceitos que coloquei em prática
-
-- Contextos com UseContext, CreateContext
-
-- Component Level CSS
-
-- Manuseio de dados em Local Storage
-
-- Configuração de Loaders
-
-## Rodando localmente
-
-Para rodar o Dev Finances localmente em modo de desenvolvimento você deve:
-
-```
-git clone https://github.com/Fernanda-Kipper/DevFinances_NextJS.git project_name
-cd project_name
-npm install
-npm run-script dev
-```
-
-No local de npm você pode utilizar o package manager de sua preferência
-
-## edicao
-
 <h1 align="center"><img align="center" src="./assets/logoDark.svg" width="400"></h1>
 
 <p align="center">
@@ -57,7 +30,15 @@ Dev Finances é uma aplicação web que auxilia o usuário no controle de suas d
 
 <h2 id="build" >Construção</h2>
 
-Para a construção do projeto apliquei alguns conceitos de JavaScript como manuseio de dados em Local Storage e outros mais específicos do mundo React e Next JS como contextos com UseContext, CreateContext, configuração de Loaders e component Level CSS
+Para a construção do projeto apliquei alguns conceitos de JavaScript como manuseio de dados em Local Storage e outros mais específicos do mundo React e Next JS como contextos com UseContext, CreateContext, mudanças de estados com Hooks, React Memo para evitar re-renderizações desnecessárias, configuração de Loaders e component Level CSS.
+
+### Levando para Outro nível 🚀
+
+Na construção do App adicionei funcionalidades a mais daquelas propostas na maratona:
+
+- Adicionei a opç~so de mudar de tema, Light ou Dark mode, e as preferências do usuário ficam salvas localmente.
+- Separação dos Gastos por Tags, exemplo: Comida.
+- Gráfico para o usuário visualizar seus gastos dividos por Tags - linkei com a funcionalidade anterior.
 
 <h2 id="clone" >Clone</h2>
 
